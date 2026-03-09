@@ -30,6 +30,14 @@ RUN adduser -D -s /bin/bash openclaw \
   # important: keep credentials directory as root:root to avoid permission issues
   && mkdir -p /data/private && chown root:root /data/private && chmod 700 /data/private
 
+USER openclaw
+RUN NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+ENV PATH="/home/linuxbrew/.linuxbrew/bin:/home/linuxbrew/.linuxbrew/sbin:${PATH}"
+ENV HOMEBREW_PREFIX="/home/linuxbrew/.linuxbrew"
+ENV HOMEBREW_CELLAR="/home/linuxbrew/.linuxbrew/Cellar"
+ENV HOMEBREW_REPOSITORY="/home/linuxbrew/.linuxbrew/Homebrew"
+
 # Alpine uses busybox crond with /etc/crontabs/ (no username field in crontab)
 COPY --chmod=640 github-app-auth/crontab.alpine /etc/crontabs/root
 # Install github-app-auth scripts directly into /root/github-app-auth

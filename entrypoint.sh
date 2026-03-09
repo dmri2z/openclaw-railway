@@ -4,6 +4,13 @@ set -e
 chown -R openclaw:openclaw /data
 chmod 700 /data
 
+if [ ! -d /data/.linuxbrew ]; then
+  cp -a /home/linuxbrew/.linuxbrew /data/.linuxbrew
+fi
+
+rm -rf /home/linuxbrew/.linuxbrew
+ln -sfn /data/.linuxbrew /home/linuxbrew/.linuxbrew
+
 PRIVATE_DIR=/data/private
 # ensure /data/private exists and is only accessible by root
 mkdir -p $PRIVATE_DIR
