@@ -1,0 +1,27 @@
+services:
+  openclaw:
+    build: .
+    ports:
+      - "${PORT:-8080}:8080"
+    volumes:
+      - openclaw-data:/data
+    environment:
+      PORT: 8080
+      SETUP_PASSWORD: ${SETUP_PASSWORD:-changeme}
+      OPENCLAW_STATE_DIR: /data/.openclaw
+      OPENCLAW_WORKSPACE_DIR: /data/workspace
+      OPENCLAW_GATEWAY_TOKEN: ${OPENCLAW_GATEWAY_TOKEN:-token}
+      # GitHub App auth (leave blank to skip)
+      GITHUB_APP_ID: ${GITHUB_APP_ID:-}
+      GITHUB_APP_INSTALLATION_ID: ${GITHUB_APP_INSTALLATION_ID:-}
+      GITHUB_APP_PRIVATE_KEY_PATH: ${GITHUB_APP_PRIVATE_KEY_PATH:-}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/setup/healthz"]
+      interval: 30s
+      timeout: 5s
+      start_period: 10s
+      retries: 3
+    restart: unless-stopped
+
+volumes:
+  openclaw-data:

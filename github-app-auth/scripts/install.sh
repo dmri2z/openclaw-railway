@@ -12,5 +12,5 @@ GITHUB_APP_PRIVATE_KEY_PATH=${GITHUB_APP_PRIVATE_KEY_PATH}
 OPENCLAW_STATE_DIR=${OPENCLAW_STATE_DIR}
 EOF
 
-crond
-echo "[entrypoint] crond started"
+cron
+echo "[entrypoint] cron started"

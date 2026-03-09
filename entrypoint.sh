@@ -11,11 +11,11 @@ fi
 rm -rf /home/linuxbrew/.linuxbrew
 ln -sfn /data/.linuxbrew /home/linuxbrew/.linuxbrew
 
-PRIVATE_DIR=/data/private
-# ensure /data/private exists and is only accessible by root
-mkdir -p $PRIVATE_DIR
-chown root:root $PRIVATE_DIR
-chmod 700 $PRIVATE_DIR
+CREDENTIALS_DIR=/data/credentials
+# ensure /data/credentials exists and is only accessible by root
+mkdir -p $CREDENTIALS_DIR
+chown root:root $CREDENTIALS_DIR
+chmod 700 $CREDENTIALS_DIR
 
 /root/github-app-auth/install.sh
-exec su-exec openclaw node src/server.js
+exec gosu openclaw node src/server.js
